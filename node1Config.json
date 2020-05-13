@@ -1,0 +1,29 @@
+{
+  "capabilities": [
+    {
+      "browserName": "firefox",
+      "acceptSslCerts": true,
+      "javascriptEnabled": true,
+      "takesScreenshot": false,
+      "firefox_profile": "",
+      "browser-version": "27",
+      "platform": "WINDOWS",
+      "maxInstances": 5,
+      "firefox_binary": "",
+      "cleanSession": true
+    },
+    {
+      "browserName": "chrome",
+      "maxInstances": 5,
+      "platform": "WINDOWS",
+      "webdriver.chrome.driver": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    },
+    {
+      "browserName": "internet explorer",
+      "maxInstances": 1,
+      "platform": "WINDOWS",
+      "webdriver.ie.driver": "C:/Program Files (x86)/Internet Explorer/iexplore.exe"
+    }
+  ]
+  
+}

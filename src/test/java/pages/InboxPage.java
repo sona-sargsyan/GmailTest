@@ -1,8 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -76,24 +74,63 @@ public class InboxPage extends BasePage {
     public void deleteEmailFromEmailDetails() {
         Actions hover = new Actions(driver);
         WebElement deleteEmailFromEmailDetails = new WebDriverWait(driver, 2000)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@aria-label='Delete']")));
-        hover.moveToElement(deleteEmailFromEmailDetails);
-        hover.build();
-        hover.perform();
-        deleteEmailFromEmailDetails.click();
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@title=\"Delete\"])[last()]")));
+        hover.moveToElement(deleteEmailFromEmailDetails).build().perform();
+        WebElement deleteEmailFromEmailDetails1 = new WebDriverWait(driver, 100)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@aria-label=\"Delete\"]")));
+        deleteEmailFromEmailDetails1.click();
+    }
+
+    public void deleteEmailFromEmailDetailsByJS() {
+
+        WebElement deleteEmailFromEmailDetails = new WebDriverWait(driver, 100)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@title=\"Delete\"])[last()]")));
+        Actions hover = new Actions(driver);
+        hover.moveToElement(deleteEmailFromEmailDetails).build().perform();
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+        WebElement deleteEmailFromEmailDetails1 = new WebDriverWait(driver, 100)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@aria-label=\"Delete\"]")));
+        javascriptExecutor.executeScript("arguments[0].click();", deleteEmailFromEmailDetails1);
+
+    }
+
+    public void hoverAndClickAdvancedSearchButton() {
+        Actions hover = new Actions(driver);
+        WebElement searchDropDownButton = new WebDriverWait(driver, 2000)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@aria-label=\"Advanced search options\"]")));
+        hover.moveToElement(searchDropDownButton).click().build().perform();
+    }
+
+    public void checkHasAttachmentCheckBox(){
+       WebElement hasAttachmentCheckBox = new WebDriverWait(driver,2000)
+               .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[text()=\"Has attachment\"]")));
+       hasAttachmentCheckBox.click();
+    }
+
+    public void clickAdvancedSearch(){
+        WebElement advancedSearch = new WebDriverWait(driver,2000)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class=\"SK ZF-zT\"]//div[text()=\"Search\"]")));
+        advancedSearch.click();
     }
 
     public void clickOnTheAccount() {
         account.click();
-        new WebDriverWait(driver, 200).until(ExpectedConditions.visibilityOf(signout));
+        new WebDriverWait(driver, 2000).until(ExpectedConditions.visibilityOf(signout));
     }
 
     public void clickSignOut(String email) {
         signout.click();
-        if (new WebDriverWait(driver, 2000).until(ExpectedConditions.alertIsPresent()) != null) {
-            driver.switchTo().alert().accept();
+        try {
+            Alert alert = new WebDriverWait(driver, 5).until(ExpectedConditions.alertIsPresent());
+            alert.accept();
         }
-        new WebDriverWait(driver, 200).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-identifier=\"mentor.mentroevich@gmail.com\"]")));
+        catch (TimeoutException e){
+            e.printStackTrace();
+        }
+            finally {
+            new WebDriverWait(driver, 2000).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-identifier=\"mentor.mentroevich@gmail.com\"]")));
+        }
+
     }
 
     public String getSubjectFromEmailDetailsPage() {
@@ -175,6 +212,12 @@ public class InboxPage extends BasePage {
         new WebDriverWait(driver, 200).until(ExpectedConditions.urlContains("inbox"));
     }
 
+    public void clickTabAndEnterButtons(){
+        Actions tabAndEnter = new Actions(driver);
+        tabAndEnter.sendKeys(Keys.TAB).build().perform();
+        tabAndEnter.sendKeys(Keys.ENTER).build().perform();
+    }
+
     public void composeAnEmail(String address, String subject, String message) {
         waitForThePageToLoad();
         openNewMessageForm();
@@ -216,6 +259,11 @@ public class InboxPage extends BasePage {
         firstRowOfTheSent.click();
     }
 
+    public void clickOnFirstEmail() {
+       WebElement firstRowOfInbox = new WebDriverWait(driver, 200).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody//tr[1]//div[@title=\"Inbox\"]")));
+        firstRowOfInbox.click();
+    }
+
     public void clickOnEmailBySubject(String subject) {
         List<WebElement> firstRowOfTheEmailList = new WebDriverWait(driver, 200)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//span[text()=\"" + subject + "\"]")));
@@ -224,6 +272,14 @@ public class InboxPage extends BasePage {
                 firstEmail.click();
         }
 
+    }
+
+    public boolean attachmentIsPresent(){
+
+        if (new WebDriverWait(driver,2000).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class=\"ii gt\"]//img")))!=null)
+            return true;
+        else
+            return false;
     }
 
     public boolean isEmailPresentsInList(String subject) {
@@ -237,6 +293,13 @@ public class InboxPage extends BasePage {
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=\"Undo\"]")));
         undoButton.click();
         new WebDriverWait(driver, 200).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=\"Action undone.\"]")));
+    }
+
+    public boolean isEmailSend() {
+        if (new WebDriverWait(driver, 2000)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()=\"Message sent.\"]"))) != null) {
+            return true;
+        } else return false;
     }
 
 
