@@ -11,6 +11,8 @@ import pages.SignInlPage;
 import service.UserBuilder;
 import util.TestListener;
 
+import java.util.logging.Logger;
+
 @Listeners({TestListener.class})
 public class BaseTest {
     public static String EMAIL = "son.sargsyan@gmail.com";
