@@ -1,5 +1,6 @@
 package pages;
 
+import model.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -8,11 +9,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SignInEmailPage extends BasePage {
+public class SignInlPage extends BasePage {
 
     private static String SIGNINEMAILPAGE_URL = "https://gmail.com";
 
-    public SignInEmailPage(WebDriver driver) {
+    public SignInlPage(WebDriver driver) {
         super(driver);
     }
 
@@ -22,7 +23,10 @@ public class SignInEmailPage extends BasePage {
     @FindBy(id = "Email")
     private WebElement email;
 
-    public SignInEmailPage openSignInPage() {
+    @FindBy(name = "password")
+    private WebElement passwordIdentifier;
+
+    public SignInlPage openSignInPage() {
         driver.get(SIGNINEMAILPAGE_URL);
         return this;
     }
@@ -36,7 +40,6 @@ public class SignInEmailPage extends BasePage {
             this.email.sendKeys(email);
             e.printStackTrace();
         }
-
     }
 
     public void clickNextButtonOnEmailLogin() {
@@ -50,12 +53,24 @@ public class SignInEmailPage extends BasePage {
         }
     }
 
-    public SignInPasswordPage openSignInPasswordPage(String email) {
-        fillEmailIdentifier(email);
-        clickNextButtonOnEmailLogin();
+    public void fillPasswordIdentifier(String password) {
         new WebDriverWait(driver, 200)
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("profileIdentifier")));
-        return new SignInPasswordPage(driver);
+                .until(ExpectedConditions.visibilityOf(passwordIdentifier));
+        passwordIdentifier.sendKeys(password);
     }
 
+    public void clickNextButtonOnPasswordIdentifier() {
+        WebElement passwordNextButton = new WebDriverWait(driver, 200)
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("passwordNext")));
+        passwordNextButton.click();
+    }
+
+    public InboxPage login(User user) {
+        fillEmailIdentifier(user.getUsername());
+        clickNextButtonOnEmailLogin();
+        fillPasswordIdentifier(user.getPassword());
+        clickNextButtonOnPasswordIdentifier();
+        return new InboxPage(driver);
+    }
 }
+

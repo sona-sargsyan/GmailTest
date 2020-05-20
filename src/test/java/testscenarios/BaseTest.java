@@ -1,38 +1,37 @@
 package testscenarios;
 
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
+import driver.DriverSingleton;
+import model.User;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import sun.plugin2.os.windows.Windows;
+import org.testng.annotations.Listeners;
+import pages.InboxPage;
+import pages.SignInlPage;
+import service.UserBuilder;
+import util.TestListener;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
-
+@Listeners({TestListener.class})
 public class BaseTest {
+    public static String EMAIL = "son.sargsyan@gmail.com";
+    public static String SUBJECT = "mentoring";
+    public static String MESSAGE = "massage text to ss";
+
     protected WebDriver driver;
+    protected InboxPage inboxPageObject;
 
     @BeforeMethod(alwaysRun = true)
-    public void browserSetup() {
-        driver = new ChromeDriver();
-        DesiredCapabilities capabilities= DesiredCapabilities.chrome();
-        capabilities.setPlatform(Platform.WINDOWS);
-        try {
-            driver=new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"),capabilities);
-        }
-        catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+    public void browserSetupAndLogin() {
+         driver = DriverSingleton.getDriver();
+        User testUser = UserBuilder.withCredentialsFromProperty();
+        inboxPageObject = new SignInlPage(driver)
+                .openSignInPage().login(testUser);
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDownBrowser() {
-        driver.quit();
-        driver = null;
+    public void SignOutAndTearDownBrowser() {
+        inboxPageObject.clickOnTheAccount();
+        inboxPageObject.clickSignOut(UserBuilder.USERNAME + "@gmail.com");
+        DriverSingleton.closeDriver();
     }
 }
