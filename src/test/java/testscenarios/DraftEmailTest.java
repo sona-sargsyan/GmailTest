@@ -1,34 +1,41 @@
 package testscenarios;
 
+import factory.EmailFactory;
+import model.Email;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.ComposeEmailPage;
+import pages.EmailDetailsPage;
+
+import static service.TestDataReader.getTestData;
+import static util.Constants.Properties.*;
 
 public class DraftEmailTest extends BaseTest {
-//    public static String EMAIL = "son.sargsyan@gmail.com";
-//    public static String SUBJECT = "mentoring";
-//    public static String MESSAGE = "massage text to ss";
 
     @Test
     public void draftMessageTest() {
         SoftAssert softAssert = new SoftAssert();
+        Email email = EmailFactory.composeEmailWithMessage(getTestData(EMAIL_MESSAGE));
 
         inboxPageObject.waitForThePageToLoad();
         Assert.assertTrue(driver.getCurrentUrl().contains("inbox"));
-        inboxPageObject.composeAnEmail(EMAIL, SUBJECT, MESSAGE);
-        inboxPageObject.saveAndCloseMessageForm();
+        ComposeEmailPage composeEmailPage = new ComposeEmailPage(driver);
+        composeEmailPage.composeAnEmail(email);
+        composeEmailPage.saveAndCloseMessageForm();
         inboxPageObject.openFolder("Drafts");
         inboxPageObject.clickOnFirstDaft();
-        softAssert.assertEquals(inboxPageObject.getAddress(), EMAIL);
-        softAssert.assertEquals(inboxPageObject.getEmailSubject(), SUBJECT);
-        softAssert.assertEquals(inboxPageObject.getTextMessage(), MESSAGE);
-        inboxPageObject.sendEmail();
+        softAssert.assertEquals(composeEmailPage.getAddress(), getTestData(EMAIL_RECIPIENT));
+        softAssert.assertEquals(composeEmailPage.getEmailSubject(), getTestData(EMAIL_SUBJECT));
+        softAssert.assertEquals(composeEmailPage.getTextMessage(), getTestData(EMAIL_MESSAGE));
+        composeEmailPage.sendEmail();
         softAssert.assertTrue(inboxPageObject.isDraftsFolderEmpty());
         inboxPageObject.openFolder("Sent");
         inboxPageObject.clickOnFirstSent();
-        softAssert.assertEquals(inboxPageObject.getRecipientFromEmailDetailsPage(), EMAIL);
-        softAssert.assertEquals(inboxPageObject.getSubjectFromEmailDetailsPage(), SUBJECT);
-        softAssert.assertEquals(inboxPageObject.getMessageTextFromEmailDetailsPage(), MESSAGE);
+        EmailDetailsPage emailDetailsPage = new EmailDetailsPage(driver);
+        softAssert.assertEquals(emailDetailsPage.getRecipientFromEmailDetailsPage(), getTestData(EMAIL_RECIPIENT));
+        softAssert.assertEquals(emailDetailsPage.getSubjectFromEmailDetailsPage(), getTestData(EMAIL_SUBJECT));
+        softAssert.assertEquals(emailDetailsPage.getMessageTextFromEmailDetailsPage(), getTestData(EMAIL_MESSAGE));
         softAssert.assertAll();
     }
 }

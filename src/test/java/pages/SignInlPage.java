@@ -16,18 +16,16 @@ public class SignInlPage extends BasePage {
     private static final String SIGNINEMAILPAGE_URL = "https://gmail.com";
     private static final Logger logger = LogManager.getRootLogger();
 
+    @FindBy(id = "next")
+    private WebElement nextButton;
+    @FindBy(id = "Email")
+    private WebElement email;
+    @FindBy(name = "password")
+    private WebElement passwordIdentifier;
+
     public SignInlPage(WebDriver driver) {
         super(driver);
     }
-
-    @FindBy(id = "next")
-    private WebElement nextButton;
-
-    @FindBy(id = "Email")
-    private WebElement email;
-
-    @FindBy(name = "password")
-    private WebElement passwordIdentifier;
 
     public SignInlPage openSignInPage() {
         driver.get(SIGNINEMAILPAGE_URL);
@@ -36,7 +34,7 @@ public class SignInlPage extends BasePage {
 
     public void fillEmailIdentifier(String email) {
         try {
-            WebElement emailIdentifierId = new WebDriverWait(driver, 200)
+            WebElement emailIdentifierId = new WebDriverWait(driver, GLOBAL_TIMEOUT)
                     .until(ExpectedConditions.presenceOfElementLocated(By.id("identifierId")));
             emailIdentifierId.sendKeys(email);
         } catch (NoSuchElementException e) {
@@ -47,7 +45,7 @@ public class SignInlPage extends BasePage {
 
     public void clickNextButtonOnEmailLogin() {
         try {
-            WebElement emailNextButton = new WebDriverWait(driver, 200)
+            WebElement emailNextButton = new WebDriverWait(driver, GLOBAL_TIMEOUT)
                     .until(ExpectedConditions.presenceOfElementLocated(By.id("identifierNext")));
             emailNextButton.click();
         } catch (NoSuchElementException e) {
@@ -57,13 +55,13 @@ public class SignInlPage extends BasePage {
     }
 
     public void fillPasswordIdentifier(String password) {
-        new WebDriverWait(driver, 200)
+        new WebDriverWait(driver, GLOBAL_TIMEOUT)
                 .until(ExpectedConditions.visibilityOf(passwordIdentifier));
         passwordIdentifier.sendKeys(password);
     }
 
     public void clickNextButtonOnPasswordIdentifier() {
-        WebElement passwordNextButton = new WebDriverWait(driver, 200)
+        WebElement passwordNextButton = new WebDriverWait(driver, GLOBAL_TIMEOUT)
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("passwordNext")));
         passwordNextButton.click();
     }
