@@ -1,4 +1,4 @@
-package pages;
+package com.cucumber.pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -86,12 +86,11 @@ public class InboxPage extends BasePage {
     public void clickSignOut(String email) {
         signout.click();
         try {
-            Alert alert = new WebDriverWait(driver, GLOBAL_TIMEOUT).until(ExpectedConditions.alertIsPresent());
+            Alert alert = new WebDriverWait(driver, 20).until(ExpectedConditions.alertIsPresent());
             alert.accept();
         } catch (TimeoutException e) {
-            e.printStackTrace();
         } finally {
-            new WebDriverWait(driver, GLOBAL_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-identifier=\"mentor.mentroevich@gmail.com\"]")));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-identifier=\"mentor.mentroevich@gmail.com\"]")));
         }
 
     }

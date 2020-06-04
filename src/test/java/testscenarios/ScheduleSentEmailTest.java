@@ -1,16 +1,16 @@
 package testscenarios;
 
-import factory.EmailFactory;
-import model.Email;
+import com.cucumber.factory.EmailFactory;
+import com.cucumber.model.Email;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.ComposeEmailPage;
-import pages.EmailDetailsPage;
-import pages.InboxPage;
-import util.DateUtil;
+import com.cucumber.pages.ComposeEmailPage;
+import com.cucumber.pages.EmailDetailsPage;
+import com.cucumber.pages.InboxPage;
+import com.cucumber.util.DateUtil;
 
-import static service.TestDataReader.getTestData;
-import static util.Constants.Properties.*;
+import static com.cucumber.service.TestDataReader.getTestData;
+import static com.cucumber.util.Constants.Properties.*;
 
 public class ScheduleSentEmailTest extends BaseTest {
 

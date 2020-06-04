@@ -1,4 +1,4 @@
-package util;
+package com.cucumber.util;
 
 public abstract class Constants {
     public static class Properties {

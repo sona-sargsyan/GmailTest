@@ -1,6 +1,6 @@
-package pages;
+package com.cucumber.pages;
 
-import model.Email;
+import com.cucumber.model.Email;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

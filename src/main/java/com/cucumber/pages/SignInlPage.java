@@ -1,6 +1,6 @@
-package pages;
+package com.cucumber.pages;
 
-import model.User;
+import com.cucumber.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -71,7 +71,7 @@ public class SignInlPage extends BasePage {
         clickNextButtonOnEmailLogin();
         fillPasswordIdentifier(user.getPassword());
         clickNextButtonOnPasswordIdentifier();
-        logger.info("Successful signed in in");
+        logger.info("Successful signed in");
         return new InboxPage(driver);
     }
 }

@@ -1,9 +1,9 @@
-package model;
+package com.cucumber.model;
 
 import java.io.File;
 
-import static service.TestDataReader.getTestData;
-import static util.Constants.Properties.*;
+import static com.cucumber.service.TestDataReader.getTestData;
+import static com.cucumber.util.Constants.Properties.*;
 
 public class Email {
 

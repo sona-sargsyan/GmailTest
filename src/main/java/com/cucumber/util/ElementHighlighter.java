@@ -1,4 +1,4 @@
-package util;
+package com.cucumber.util;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

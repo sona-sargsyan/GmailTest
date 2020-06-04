@@ -2,7 +2,7 @@ package testscenarios;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.InboxPage;
+import com.cucumber.pages.InboxPage;
 
 public class UndoMessageDeletionTest extends BaseTest {
 

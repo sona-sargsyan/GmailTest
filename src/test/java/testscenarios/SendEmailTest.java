@@ -1,18 +1,18 @@
 package testscenarios;
 
-import factory.EmailFactory;
-import model.Email;
+import com.cucumber.factory.EmailFactory;
+import com.cucumber.model.Email;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.ComposeEmailPage;
-import pages.EmailDetailsPage;
-import util.ElementHighlighter;
+import com.cucumber.pages.ComposeEmailPage;
+import com.cucumber.pages.EmailDetailsPage;
+import com.cucumber.util.ElementHighlighter;
 
-import static service.TestDataReader.getTestData;
-import static util.Constants.Properties.*;
+import static com.cucumber.service.TestDataReader.getTestData;
+import static com.cucumber.util.Constants.Properties.*;
 
 public class SendEmailTest extends BaseTest {
     @Test

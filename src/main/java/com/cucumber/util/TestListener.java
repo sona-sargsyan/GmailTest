@@ -1,6 +1,6 @@
-package util;
+package com.cucumber.util;
 
-import driver.DriverSingletonFactory;
+import com.cucumber.driver.DriverSingletonFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

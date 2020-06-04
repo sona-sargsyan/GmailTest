@@ -1,4 +1,4 @@
-package model;
+package com.cucumber.model;
 
 import java.util.Objects;
 

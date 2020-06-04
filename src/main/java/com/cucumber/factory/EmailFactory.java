@@ -1,12 +1,12 @@
-package factory;
+package com.cucumber.factory;
 
-import model.Email;
+import com.cucumber.model.Email;
 
 import java.io.File;
 
-import static service.TestDataReader.getTestData;
-import static util.Constants.Properties.EMAIL_RECIPIENT;
-import static util.Constants.Properties.EMAIL_SUBJECT;
+import static com.cucumber.service.TestDataReader.getTestData;
+import static com.cucumber.util.Constants.Properties.EMAIL_RECIPIENT;
+import static com.cucumber.util.Constants.Properties.EMAIL_SUBJECT;
 
 public class EmailFactory {
 

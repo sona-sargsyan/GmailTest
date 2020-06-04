@@ -1,4 +1,4 @@
-package service;
+package com.cucumber.service;
 
 import java.util.ResourceBundle;
 
